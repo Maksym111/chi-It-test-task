@@ -1,53 +1,55 @@
 import { MainTable } from "./TableCars.styled";
 import TableHead from "../tableHead/TableHead";
 import TableBody from "../tableBody/TableBody";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getAllCars } from "../services/axios";
 import CarsPagination from "../carsPagination/CarsPagination";
 
 const TableCars = () => {
-  const [allUsers, setAllUsers] = useState([]);
-  const [usersPerPage, setUsersPerPage] = useState([]);
+  const [allCars, setAllCars] = useState([]);
+  const [carsPerPage, setCarsPerPage] = useState([]);
+
+  const [range, setRange] = useState([0, 50]);
 
   useEffect(() => {
     async function getCar() {
-      const users = await getAllCars();
+      const cars = await getAllCars();
 
-      setAllUsers(users);
-      setUsersPerPage(users.slice(0, 50));
+      setAllCars(cars);
+      setCarsPerPage(cars.slice(range[0], range[1]));
     }
 
     getCar();
-  }, []);
+  }, [range]);
 
   useEffect(() => {
-    const [firstRange, secondRange] = getCurrentPage();
-    console.log(firstRange);
-    console.log(secondRange);
+    async function updateCarsPerPage() {
+      const newCarsPerPage = allCars.slice(range[0], range[1]);
+      setCarsPerPage(newCarsPerPage);
+    }
 
-    setUsersPerPage(allUsers.slice(firstRange, secondRange));
-  }, [allUsers]);
+    updateCarsPerPage();
+  }, [range, allCars]);
 
-  const getCurrentPage = (number) => {
+  const getCurrentPage = useCallback((number) => {
     let firstRange = number * 50 - 50;
     let secondRange = number * 50;
 
-    if (isNaN(firstRange) || isNaN(secondRange)) {
-      firstRange = 0;
-      secondRange = 50;
-    }
-
-    return [firstRange, secondRange];
-  };
+    setRange([firstRange, secondRange]);
+  }, []);
 
   return (
     <div>
-      <MainTable>
-        <TableHead />
-        <TableBody users={usersPerPage} />
-      </MainTable>
+      {carsPerPage.length > 0 && (
+        <>
+          <MainTable>
+            <TableHead />
+            <TableBody cars={carsPerPage} />
+          </MainTable>
 
-      <CarsPagination users={allUsers} getCurrentPage={getCurrentPage} />
+          <CarsPagination cars={allCars} getCurrentPage={getCurrentPage} />
+        </>
+      )}
     </div>
   );
 };

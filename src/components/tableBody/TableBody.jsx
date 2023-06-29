@@ -1,8 +1,8 @@
-const TableBody = ({ users }) => {
+const TableBody = ({ cars }) => {
   return (
     <tbody>
-      {users &&
-        users.map((user) => {
+      {cars &&
+        cars.map((user) => {
           return (
             <tr key={user.id}>
               <td>{user.car}</td>
