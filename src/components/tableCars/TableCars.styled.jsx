@@ -19,7 +19,7 @@ export const MainTable = styled.table`
   }
 
   td {
-    overflow: hidden;
+    /* overflow: hidden; */
   }
   td:nth-of-type(1) {
     width: 150px;
@@ -31,19 +31,21 @@ export const MainTable = styled.table`
     width: 200px;
   }
   td:nth-of-type(4) {
-    width: 100px;
+    width: 125px;
   }
   td:nth-of-type(5) {
     width: 50px;
   }
   td:nth-of-type(6) {
-    width: 100px;
+    width: 125px;
+    padding: 5px;
   }
   td:nth-of-type(7) {
-    width: 10px;
+    width: 100px;
+    padding: 5px;
   }
   td:nth-of-type(8) {
-    width: 10px;
+    width: 150px;
     padding: 0;
   }
 `;

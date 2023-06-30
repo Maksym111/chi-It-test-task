@@ -14,7 +14,6 @@ export const getAllCars = async () => {
 export const getCarById = async (id) => {
   try {
     const currentCar = await axios.get(`cars/${id}`);
-    // console.log(currentCar.data.Car);
     return currentCar.data.Car;
   } catch (err) {
     console.error(err);

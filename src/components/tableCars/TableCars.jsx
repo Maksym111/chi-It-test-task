@@ -1,13 +1,21 @@
-import { MainTable } from "./TableCars.styled";
+import { useCallback, useEffect, useState } from "react";
+
+import authContext from "../../context/authContext";
+import { getAllCars } from "../../services/axios";
+
 import TableHead from "../tableHead/TableHead";
 import TableBody from "../tableBody/TableBody";
-import { useCallback, useEffect, useState } from "react";
-import { getAllCars } from "../services/axios";
+import ModalWindow from "../modal/ModalWindow";
 import CarsPagination from "../carsPagination/CarsPagination";
+import SearchCar from "../search/SearchCar";
+
+import { MainTable } from "./TableCars.styled";
 
 const TableCars = () => {
   const [allCars, setAllCars] = useState([]);
   const [carsPerPage, setCarsPerPage] = useState([]);
+
+  const [currentRowCar, setCurrentRowCar] = useState([]);
 
   const [range, setRange] = useState([0, 50]);
 
@@ -16,11 +24,13 @@ const TableCars = () => {
       const cars = await getAllCars();
 
       setAllCars(cars);
-      setCarsPerPage(cars.slice(range[0], range[1]));
     }
-
     getCar();
-  }, [range]);
+  }, []);
+
+  useEffect(() => {
+    setCarsPerPage(allCars.slice(range[0], range[1]));
+  }, [allCars, range]);
 
   useEffect(() => {
     async function updateCarsPerPage() {
@@ -38,19 +48,46 @@ const TableCars = () => {
     setRange([firstRange, secondRange]);
   }, []);
 
-  return (
-    <div>
-      {carsPerPage.length > 0 && (
-        <>
-          <MainTable>
-            <TableHead />
-            <TableBody cars={carsPerPage} />
-          </MainTable>
+  const updateAllCars = (value) => {
+    setAllCars(value);
+  };
+  const updateCarsPerPage = (value) => {
+    setCarsPerPage(value);
+  };
+  const updateCurrentRowCar = (value) => {
+    setCurrentRowCar(value);
+  };
 
-          <CarsPagination cars={allCars} getCurrentPage={getCurrentPage} />
-        </>
-      )}
-    </div>
+  return (
+    <authContext.Provider
+      value={{
+        allCars,
+        updateAllCars,
+
+        carsPerPage,
+        updateCarsPerPage,
+
+        currentRowCar,
+        updateCurrentRowCar,
+      }}
+    >
+      <div>
+        {carsPerPage.length > 0 && (
+          <>
+            <SearchCar />
+
+            <MainTable>
+              <TableHead />
+              <TableBody />
+            </MainTable>
+
+            <ModalWindow />
+
+            <CarsPagination getCurrentPage={getCurrentPage} />
+          </>
+        )}
+      </div>
+    </authContext.Provider>
   );
 };
 

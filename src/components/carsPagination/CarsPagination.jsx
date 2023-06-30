@@ -1,4 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+
+import ctx from "../../context/authContext";
+
 import {
   LiBtn,
   ListLiPagination,
@@ -7,7 +10,9 @@ import {
   ButtonPagination,
 } from "./CarsPagination.styled";
 
-const CarsPagination = ({ cars, getCurrentPage }) => {
+const CarsPagination = ({ getCurrentPage }) => {
+  const { allCars: cars } = useContext(ctx);
+
   const [allNumbersBtn, setAllNumbersBtn] = useState([]);
   const [currentNumbBtn, setCurrentNumbBtn] = useState([]);
 

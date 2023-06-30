@@ -1,20 +1,17 @@
-const TableBody = ({ cars }) => {
+import { useContext } from "react";
+import ctx from "../../context/authContext";
+
+import TableRow from "../tableRow/TableRow";
+
+const TableBody = () => {
+  const authContext = useContext(ctx);
+  const cars = authContext.carsPerPage;
+
   return (
     <tbody>
       {cars &&
-        cars.map((user) => {
-          return (
-            <tr key={user.id}>
-              <td>{user.car}</td>
-              <td>{user.car_model}</td>
-              <td>{user.car_vin}</td>
-              <td>{user.car_color}</td>
-              <td>{user.car_model_year}</td>
-              <td>{user.price}</td>
-              <td>{user.availability.toString()}</td>
-              <td>Edit</td>
-            </tr>
-          );
+        cars.map((carEl) => {
+          return <TableRow key={carEl.id} carEl={carEl} />;
         })}
     </tbody>
   );
