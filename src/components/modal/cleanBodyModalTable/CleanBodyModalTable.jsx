@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import ctx from "../../../context/authContext";
 
-
-import CompanyInput from "../../inputsModalWindow/companyInput";
+import CompanyInput from "../../inputsModalWindow/CompanyInput";
 import ModelInput from "../../inputsModalWindow/ModelInput";
 import VinInput from "../../inputsModalWindow/VinInput";
 import SelectColor from "../selects/SelectColor";
