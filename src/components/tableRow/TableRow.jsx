@@ -16,12 +16,12 @@ const TableRow = ({ carEl }) => {
     availability,
   } = carEl;
 
-  const authContext = useContext(ctx);
+  const { updateCurrentRowCar } = useContext(ctx);
 
   const getTypeAction = (typeAction) => {
     const newCarEl = { typeAction };
     Object.assign(newCarEl, carEl);
-    authContext.updateCurrentRowCar(newCarEl);
+    updateCurrentRowCar(newCarEl);
   };
 
   return (

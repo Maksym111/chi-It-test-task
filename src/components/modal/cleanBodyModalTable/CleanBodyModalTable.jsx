@@ -1,0 +1,56 @@
+import { useContext } from "react";
+import ctx from "../../../context/authContext";
+
+
+import CompanyInput from "../../inputsModalWindow/companyInput";
+import ModelInput from "../../inputsModalWindow/ModelInput";
+import VinInput from "../../inputsModalWindow/VinInput";
+import SelectColor from "../selects/SelectColor";
+import PriceInput from "../../inputsModalWindow/PriceInput";
+import SelectAvailability from "../selects/SelectAvailability";
+
+import SelectYear from "../selects/yearSelect/SelectYear";
+
+const CleanBodyModalTable = ({ isPriceOpen }) => {
+  const { updateCurrentRowCar } = useContext(ctx);
+
+  const addNewValue = (newData) => {
+    updateCurrentRowCar((prevState) => {
+      return { ...prevState, ...newData };
+    });
+  };
+
+  return (
+    <tbody>
+      <tr>
+        <td>
+          <CompanyInput addNewValue={addNewValue} />
+        </td>
+        <td>
+          <ModelInput addNewValue={addNewValue} />
+        </td>
+        <td>
+          <VinInput addNewValue={addNewValue} />
+        </td>
+        <td>
+          <SelectColor defaultValue="" addNewValue={addNewValue} />
+        </td>
+        <td>
+          <SelectYear addNewValue={addNewValue} />
+        </td>
+        <td>
+          <PriceInput
+            defaultValue="$0"
+            addNewValue={addNewValue}
+            isPriceOpen={isPriceOpen}
+          />
+        </td>
+        <td>
+          <SelectAvailability defaultValue="" addNewValue={addNewValue} />
+        </td>
+      </tr>
+    </tbody>
+  );
+};
+
+export default CleanBodyModalTable;

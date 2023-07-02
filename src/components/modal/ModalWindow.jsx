@@ -4,10 +4,11 @@ import { Notify } from "notiflix/build/notiflix-notify-aio";
 import ctx from "../../context/authContext";
 import isEqualObject from "../../utils/jsFunc/isEqualObject";
 
-import { Modal, ModalOverlay } from "./ModalWindow.styled";
+import { CancelBtn, Modal, ModalOverlay, SaveBtn } from "./ModalWindow.styled";
 import { MainTable } from "../tableCars/TableCars.styled";
 import HeadModalTable from "./headModalTable/HeadModalTable";
 import BodyModalTable from "./bodyModalTable/BodyModalTable";
+import CleanBodyModalTable from "./cleanBodyModalTable/CleanBodyModalTable";
 
 const ModalWindow = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +24,7 @@ const ModalWindow = () => {
   const { id, typeAction } = carEl;
 
   useEffect(() => {
-    if (id) {
+    if (typeAction) {
       openModal();
 
       document.addEventListener("keydown", handleKeyDown);
@@ -39,7 +40,7 @@ const ModalWindow = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [id, updateCurrentRowCar]);
+  }, [typeAction, updateCurrentRowCar]);
 
   const onOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -66,10 +67,10 @@ const ModalWindow = () => {
     closeModal();
   };
 
-  const saveNewData = () => {
+  const saveUpdateDataCar = () => {
     const newCars = [...allCars];
     const updatedCar = newCars.find((elem) => elem.id === id);
-    updatedCar["typeAction"] = "edit";
+    updatedCar[typeAction] = typeAction;
 
     const indexElem = newCars.indexOf(updatedCar);
     const isEqual = isEqualObject(updatedCar, carEl);
@@ -90,6 +91,10 @@ const ModalWindow = () => {
     closeModal();
   };
 
+  const saveNewDataCar = () => {
+    return;
+  };
+
   return (
     <>
       {isModalOpen && typeAction === "edit" && (
@@ -100,12 +105,12 @@ const ModalWindow = () => {
               <BodyModalTable isPriceOpen={setIsPriceInputOpen} />
             </MainTable>
 
-            <button type="button" onClick={saveNewData}>
+            <SaveBtn type="button" onClick={saveUpdateDataCar}>
               Save
-            </button>
-            <button type="button" onClick={closeModal}>
+            </SaveBtn>
+            <CancelBtn type="button" onClick={closeModal}>
               Cancel
-            </button>
+            </CancelBtn>
           </Modal>
         </ModalOverlay>
       )}
@@ -120,6 +125,23 @@ const ModalWindow = () => {
             <button type="button" onClick={closeModal}>
               No
             </button>
+          </Modal>
+        </ModalOverlay>
+      )}
+      {isModalOpen && typeAction === "addNew" && (
+        <ModalOverlay onClick={onOverlayClick}>
+          <Modal>
+            <MainTable>
+              <HeadModalTable />
+              <CleanBodyModalTable isPriceOpen={setIsPriceInputOpen} />
+            </MainTable>
+
+            <SaveBtn type="button" onClick={saveNewDataCar}>
+              Save
+            </SaveBtn>
+            <CancelBtn type="button" onClick={closeModal}>
+              Cancel
+            </CancelBtn>
           </Modal>
         </ModalOverlay>
       )}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Edits, WrapEdits, WrapPrice } from "./PriceInput.styled";
+import { Edits, WrapEdits, Wrapper } from "./StylesInput.styled";
 
 const PriceInput = ({ defaultValue, addNewValue, isPriceOpen }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -29,11 +29,11 @@ const PriceInput = ({ defaultValue, addNewValue, isPriceOpen }) => {
   };
 
   const changeEdit = () => {
-    setIsEdit((prevState) => !prevState);
     isPriceOpen(!isEdit);
     if (nowAndPrevInputValue[0] !== nowAndPrevInputValue[1]) {
       addNewValue({ price: `$${nowAndPrevInputValue[0]}` });
     }
+    setIsEdit((prevState) => !prevState);
   };
 
   const cancelChangesEdit = () => {
@@ -43,7 +43,7 @@ const PriceInput = ({ defaultValue, addNewValue, isPriceOpen }) => {
   };
 
   return (
-    <WrapPrice>
+    <Wrapper>
       {isEdit ? (
         <>
           <input
@@ -66,7 +66,7 @@ const PriceInput = ({ defaultValue, addNewValue, isPriceOpen }) => {
           <Edits onClick={cancelChangesEdit}>⚙️</Edits>
         </>
       )}
-    </WrapPrice>
+    </Wrapper>
   );
 };
 

@@ -19,21 +19,6 @@ export const Modal = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 `;
 
-// .close-button {
-//   background-color: #ccc;
-//   border: none;
-//   padding: 8px 12px;
-//   border-radius: 4px;
-//   cursor: pointer;
-//   margin-bottom: 10px;
-// }
+export const SaveBtn = styled.button``;
 
-// /* Дополнительные стили */
-// h2 {
-//   font-size: 24px;
-//   margin-bottom: 10px;
-// }
-
-// p {
-//   margin-bottom: 10px;
-// }
+export const CancelBtn = styled.button``;

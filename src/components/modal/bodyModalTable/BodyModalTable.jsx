@@ -3,7 +3,7 @@ import ctx from "../../../context/authContext";
 
 import SelectColor from "../selects/SelectColor";
 import SelectAvailability from "../selects/SelectAvailability";
-import PriceInput from "../../inputsModalWindow/priceInput/PriceInput";
+import PriceInput from "../../inputsModalWindow/PriceInput";
 
 const BodyModalTable = ({ isPriceOpen }) => {
   const { currentRowCar: carEl, updateCurrentRowCar } = useContext(ctx);
