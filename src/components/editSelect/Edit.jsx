@@ -1,9 +1,6 @@
-import { useState } from "react";
 import Select from "react-select";
 
 const Edit = ({ getTypeAction }) => {
-  const [selectedValue, setSelectedValue] = useState("options");
-
   const optionsSelect = [
     {
       value: "options",
@@ -44,8 +41,6 @@ const Edit = ({ getTypeAction }) => {
 
   const onChangeFilter = (newOption) => {
     getTypeAction(newOption.value);
-    const defaultValue = optionsSelect.find((elem) => elem.value === "options");
-    setSelectedValue(defaultValue);
   };
 
   return (
