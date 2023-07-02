@@ -5,7 +5,7 @@ import { getAllCars } from "../../services/axios";
 
 import TableHead from "../tableHead/TableHead";
 import TableBody from "../tableBody/TableBody";
-import AddNewCarBtn from "../addNewCar/addNewCarBtn";
+import AddNewCarBtn from "../addNewCar/AddNewCarBtn";
 import ModalWindow from "../modal/ModalWindow";
 import CarsPagination from "../carsPagination/CarsPagination";
 import SearchCar from "../search/SearchCar";
