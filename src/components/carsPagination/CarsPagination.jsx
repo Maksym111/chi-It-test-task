@@ -11,7 +11,7 @@ import {
 } from "./CarsPagination.styled";
 
 const CarsPagination = ({ getCurrentPage }) => {
-  const { allCars: cars } = useContext(ctx);
+  const { filteredCars: cars } = useContext(ctx);
 
   const [allNumbersBtn, setAllNumbersBtn] = useState([]);
   const [currentNumbsBtn, setCurrentNumbsBtn] = useState([]);

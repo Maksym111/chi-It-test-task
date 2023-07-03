@@ -1,18 +1,15 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import ctx from "../../context/authContext";
 import { Notify } from "notiflix";
 
-const SearchCar = ({ carsForSearch }) => {
+const SearchCar = () => {
   const [searchInputValue, setSearchInputValue] = useState("");
-  const { allCars, updateAllCars } = useContext(ctx);
-  const allCarsRef = useRef([...allCars]);
+  const { allCars, updateFilteredCars } = useContext(ctx);
 
-  console.log(carsForSearch);
   const searchedCars = (str) => {
-    // const ALL_CARS = allCarsRef.current;
-    const ALL_CARS = carsForSearch;
+    const ALL_CARS = allCars;
 
-    if (str === "") return ALL_CARS;
+    if (str === "") return allCars;
 
     let wordsSearch = str.split(" ");
 
@@ -35,7 +32,7 @@ const SearchCar = ({ carsForSearch }) => {
     e.preventDefault();
     const resCars = searchedCars(searchInputValue.toLowerCase().trim());
 
-    updateAllCars(resCars);
+    updateFilteredCars(resCars);
   };
 
   const filterByWord = (word, arr) => {

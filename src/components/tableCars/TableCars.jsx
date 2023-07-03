@@ -14,7 +14,7 @@ import { MainTable } from "./TableCars.styled";
 
 const TableCars = () => {
   const [allCars, setAllCars] = useState([]);
-  const [carsForSearch, setCarsForSearch] = useState(allCars);
+  const [filteredCars, setFilteredCars] = useState([]);
   const [carsPerPage, setCarsPerPage] = useState([]);
 
   const [currentRowCar, setCurrentRowCar] = useState([]);
@@ -22,31 +22,37 @@ const TableCars = () => {
   const [range, setRange] = useState([0, 50]);
 
   useEffect(() => {
-    setCarsForSearch(allCars);
-    console.log("Поменялись allCars");
-  }, [allCars]);
-
-  useEffect(() => {
     async function getCar() {
       const cars = await getAllCars();
 
+      setFilteredCars(cars);
       setAllCars(cars);
     }
     getCar();
   }, []);
 
-  // useEffect(() => {
-  //   setCarsPerPage(allCars.slice(range[0], range[1]));
-  // }, [allCars, range]);
+  useEffect(() => {
+    setFilteredCars((prevState) => {
+      const idFilteredArr = prevState.map((elem) => {
+        return elem.id;
+      });
+
+      const qwe = allCars.filter((elem) => {
+        return idFilteredArr.includes(elem.id);
+      });
+
+      return qwe;
+    });
+  }, [allCars, filteredCars.id]);
 
   useEffect(() => {
     async function updateCarsPerPage() {
-      const newCarsPerPage = allCars.slice(range[0], range[1]);
+      const newCarsPerPage = filteredCars.slice(range[0], range[1]);
       setCarsPerPage(newCarsPerPage);
     }
 
     updateCarsPerPage();
-  }, [range, allCars]);
+  }, [range, filteredCars]);
 
   const getCurrentPage = useCallback((number) => {
     let firstRange = number * 50 - 50;
@@ -65,6 +71,10 @@ const TableCars = () => {
     setCurrentRowCar(value);
   };
 
+  const updateFilteredCars = (value) => {
+    setFilteredCars(value);
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -76,10 +86,13 @@ const TableCars = () => {
 
         currentRowCar,
         updateCurrentRowCar,
+
+        filteredCars,
+        updateFilteredCars,
       }}
     >
       <div>
-        <SearchCar carsForSearch={carsForSearch} />
+        <SearchCar />
         <AddNewCarBtn />
         <MainTable>
           <TableHead />

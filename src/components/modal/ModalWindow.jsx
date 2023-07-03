@@ -4,7 +4,6 @@ import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { v4 as uuidv4 } from "uuid";
 
 import ctx from "../../context/authContext";
-// import isEqualObject from "../../utils/jsFunc/isEqualObject";
 import isEqualObject from "../../utils/jsFunc";
 
 import { CancelBtn, Modal, ModalOverlay, SaveBtn } from "./ModalWindow.styled";
@@ -20,6 +19,7 @@ const ModalWindow = () => {
   const {
     allCars,
     updateAllCars,
+    updateFilteredCars,
     updateCurrentRowCar,
     currentRowCar: carEl,
   } = useContext(ctx);
@@ -73,7 +73,7 @@ const ModalWindow = () => {
   const saveUpdateDataCar = () => {
     const newCars = [...allCars];
     const updatedCar = newCars.find((elem) => elem.id === id);
-    updatedCar[typeAction] = typeAction;
+    delete carEl.typeAction;
 
     const indexElem = newCars.indexOf(updatedCar);
     const isEqual = isEqualObject(updatedCar, carEl);
@@ -121,6 +121,7 @@ const ModalWindow = () => {
 
     cars.unshift(carEl);
     updateAllCars(cars);
+    updateFilteredCars(cars);
     closeModal();
   };
 
