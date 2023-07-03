@@ -2,16 +2,34 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { ContainerYearPicker, WrapperYearPicker } from "./SelectYear.styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const SelectYear = ({ addNewValue }) => {
+const SelectYear = ({ addNewValue, isEditOpen }) => {
   const [selectedYear, setSelectedYear] = useState(null);
   const currentYear = new Date().getFullYear();
+
+  useEffect(() => {
+    if (selectedYear === null) {
+      isEditOpen((prevState) => {
+        return {
+          ...prevState,
+          year: true,
+        };
+      });
+    }
+  }, [isEditOpen, selectedYear]);
 
   const handleYearChange = (dataYear) => {
     setSelectedYear(dataYear);
     const car_model_year = dataYear.getFullYear();
     addNewValue({ car_model_year });
+
+    isEditOpen((prevState) => {
+      return {
+        ...prevState,
+        year: false,
+      };
+    });
   };
 
   const handleKeyDown = (event) => {

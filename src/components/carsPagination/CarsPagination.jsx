@@ -14,7 +14,7 @@ const CarsPagination = ({ getCurrentPage }) => {
   const { allCars: cars } = useContext(ctx);
 
   const [allNumbersBtn, setAllNumbersBtn] = useState([]);
-  const [currentNumbBtn, setCurrentNumbBtn] = useState([]);
+  const [currentNumbsBtn, setCurrentNumbsBtn] = useState([]);
 
   const [activеBtnNumber, setActivBtnNumber] = useState("1");
   const arrowBack = useRef("");
@@ -25,9 +25,11 @@ const CarsPagination = ({ getCurrentPage }) => {
 
   useEffect(() => {
     //Створення масиву номерів для кнопок пагінації
-
     const firstCreatePaginationNumbers = () => {
-      const countCars = cars.length;
+      let countCars = 1;
+      if (cars.length !== 0) {
+        countCars = cars.length;
+      }
       const countCarsPerPage = 50;
       const btnsPagination = [];
 
@@ -52,7 +54,10 @@ const CarsPagination = ({ getCurrentPage }) => {
       const { current: nextBtn } = arrowNext;
 
       //Активні чи неактивні кнопки "наступна" (>) та "попередня" (<)
-      if (backBtn && activеBtnNumber.toString() === "1") {
+      if (lastPage === "1") {
+        backBtn.disabled = true;
+        nextBtn.disabled = true;
+      } else if (backBtn && activеBtnNumber.toString() === "1") {
         backBtn.disabled = true;
         nextBtn.disabled = false;
       } else if (nextBtn && activеBtnNumber.toString() === lastPage) {
@@ -64,27 +69,24 @@ const CarsPagination = ({ getCurrentPage }) => {
       ) {
         backBtn.disabled = false;
         nextBtn.disabled = false;
-      } else if (lastPage === "1") {
-        backBtn.disabled = true;
-        nextBtn.disabled = true;
       }
 
       if (allNumbersBtn.length < 10) {
-        return setCurrentNumbBtn(allNumbersBtn);
+        return setCurrentNumbsBtn(allNumbersBtn);
       } else if (activеBtnNumber < 7) {
-        return setCurrentNumbBtn([
+        return setCurrentNumbsBtn([
           ...allNumbersBtn.slice(0, 7),
           RIGHT_DOTS,
           lastPage,
         ]);
       } else if (allNumbersBtn.length - activеBtnNumber < 6) {
-        return setCurrentNumbBtn([
+        return setCurrentNumbsBtn([
           allNumbersBtn[0],
           LEFT_DOTS,
           ...allNumbersBtn.slice(-7),
         ]);
       } else {
-        return setCurrentNumbBtn([
+        return setCurrentNumbsBtn([
           allNumbersBtn[0],
           LEFT_DOTS,
           ...allNumbersBtn.slice(activеBtnNumber - 3, activеBtnNumber + 2),
@@ -108,7 +110,12 @@ const CarsPagination = ({ getCurrentPage }) => {
     //-------логіка натискання на три крапк, в else на будь-який номер кнопки
 
     if (textContent === RIGHT_DOTS) {
-      const newNumber = +activеBtnNumber + 6;
+      let newNumber = 0;
+      if (currentNumbsBtn.length < 12) {
+        newNumber = +activеBtnNumber + 4;
+      } else {
+        newNumber = +activеBtnNumber + 6;
+      }
 
       setActivBtnNumber(newNumber);
       getCurrentPage(newNumber);
@@ -147,8 +154,8 @@ const CarsPagination = ({ getCurrentPage }) => {
             {"<"}
           </ButtonPagination>
           <ListLiPagination onClick={handleListElementClick}>
-            {currentNumbBtn.length > 0 &&
-              currentNumbBtn.map((number) => {
+            {currentNumbsBtn.length > 0 &&
+              currentNumbsBtn.map((number) => {
                 return number === activеBtnNumber.toString() ? (
                   <ActiveLiBtn key={number}>{number}</ActiveLiBtn>
                 ) : (

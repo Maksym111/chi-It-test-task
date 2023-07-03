@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import Select from "react-select";
 import ctx from "../../../context/authContext";
 
-const SelectColor = ({ defaultValue, addNewValue }) => {
+const SelectColor = ({ defaultValue, addNewValue, isEditOpen }) => {
   const [allColors, setAllColors] = useState([]);
   const [selectedValue, setSelectedValue] = useState(
     defaultValue.toLowerCase()
@@ -33,6 +33,17 @@ const SelectColor = ({ defaultValue, addNewValue }) => {
       };
     },
   };
+
+  useEffect(() => {
+    if (defaultValue === "") {
+      isEditOpen((prevState) => {
+        return {
+          ...prevState,
+          color: true,
+        };
+      });
+    }
+  }, [defaultValue, isEditOpen]);
 
   useEffect(() => {
     const getAllColors = () => {
@@ -77,6 +88,15 @@ const SelectColor = ({ defaultValue, addNewValue }) => {
   const onChangeFilter = (newOption) => {
     setSelectedValue(newOption.value);
     addNewValue({ car_color: newOption.label });
+
+    if (selectedValue === "") {
+      isEditOpen((prevState) => {
+        return {
+          ...prevState,
+          color: false,
+        };
+      });
+    }
   };
 
   return (

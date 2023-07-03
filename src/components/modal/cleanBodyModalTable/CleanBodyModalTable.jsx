@@ -10,7 +10,7 @@ import SelectAvailability from "../selects/SelectAvailability";
 
 import SelectYear from "../selects/yearSelect/SelectYear";
 
-const CleanBodyModalTable = ({ isPriceOpen }) => {
+const CleanBodyModalTable = ({ isEditOpen }) => {
   const { updateCurrentRowCar } = useContext(ctx);
 
   const addNewValue = (newData) => {
@@ -23,29 +23,37 @@ const CleanBodyModalTable = ({ isPriceOpen }) => {
     <tbody>
       <tr>
         <td>
-          <CompanyInput addNewValue={addNewValue} />
+          <CompanyInput addNewValue={addNewValue} isEditOpen={isEditOpen} />
         </td>
         <td>
-          <ModelInput addNewValue={addNewValue} />
+          <ModelInput addNewValue={addNewValue} isEditOpen={isEditOpen} />
         </td>
         <td>
-          <VinInput addNewValue={addNewValue} />
+          <VinInput addNewValue={addNewValue} isEditOpen={isEditOpen} />
         </td>
         <td>
-          <SelectColor defaultValue="" addNewValue={addNewValue} />
+          <SelectColor
+            defaultValue=""
+            addNewValue={addNewValue}
+            isEditOpen={isEditOpen}
+          />
         </td>
         <td>
-          <SelectYear addNewValue={addNewValue} />
+          <SelectYear addNewValue={addNewValue} isEditOpen={isEditOpen} />
         </td>
         <td>
           <PriceInput
             defaultValue="$0"
             addNewValue={addNewValue}
-            isPriceOpen={isPriceOpen}
+            isEditOpen={isEditOpen}
           />
         </td>
         <td>
-          <SelectAvailability defaultValue="" addNewValue={addNewValue} />
+          <SelectAvailability
+            defaultValue=""
+            addNewValue={addNewValue}
+            isEditOpen={isEditOpen}
+          />
         </td>
       </tr>
     </tbody>

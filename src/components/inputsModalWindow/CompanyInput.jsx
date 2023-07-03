@@ -1,9 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Edits, Wrapper } from "./StylesInput.styled";
 
-const CompanyInput = ({ addNewValue }) => {
+const CompanyInput = ({ addNewValue, isEditOpen }) => {
   const [isEdit, setIsEdit] = useState(true);
   const [car, setCar] = useState("");
+
+  useEffect(() => {
+    if (isEdit === true) {
+      isEditOpen((prevState) => {
+        return {
+          ...prevState,
+          company: true,
+        };
+      });
+    }
+  }, [isEdit, isEditOpen]);
 
   const handleChageValueInput = (e) => {
     let { value } = e.target;
@@ -28,8 +39,14 @@ const CompanyInput = ({ addNewValue }) => {
   const confirmData = () => {
     addNewValue({ car });
 
-    setIsEdit((prevState) => !prevState);
-    // isPriceOpen(!isEdit);
+    setIsEdit(false);
+
+    isEditOpen((prevState) => {
+      return {
+        ...prevState,
+        company: false,
+      };
+    });
   };
 
   return (

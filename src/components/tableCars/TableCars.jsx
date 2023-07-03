@@ -14,11 +14,17 @@ import { MainTable } from "./TableCars.styled";
 
 const TableCars = () => {
   const [allCars, setAllCars] = useState([]);
+  const [carsForSearch, setCarsForSearch] = useState(allCars);
   const [carsPerPage, setCarsPerPage] = useState([]);
 
   const [currentRowCar, setCurrentRowCar] = useState([]);
 
   const [range, setRange] = useState([0, 50]);
+
+  useEffect(() => {
+    setCarsForSearch(allCars);
+    console.log("Поменялись allCars");
+  }, [allCars]);
 
   useEffect(() => {
     async function getCar() {
@@ -29,9 +35,9 @@ const TableCars = () => {
     getCar();
   }, []);
 
-  useEffect(() => {
-    setCarsPerPage(allCars.slice(range[0], range[1]));
-  }, [allCars, range]);
+  // useEffect(() => {
+  //   setCarsPerPage(allCars.slice(range[0], range[1]));
+  // }, [allCars, range]);
 
   useEffect(() => {
     async function updateCarsPerPage() {
@@ -73,22 +79,14 @@ const TableCars = () => {
       }}
     >
       <div>
-        {carsPerPage.length > 0 && (
-          <>
-            <SearchCar />
-
-            <AddNewCarBtn />
-
-            <MainTable>
-              <TableHead />
-              <TableBody />
-            </MainTable>
-
-            <ModalWindow />
-
-            <CarsPagination getCurrentPage={getCurrentPage} />
-          </>
-        )}
+        <SearchCar carsForSearch={carsForSearch} />
+        <AddNewCarBtn />
+        <MainTable>
+          <TableHead />
+          {carsPerPage.length > 0 ? <TableBody /> : <TableBody empty />}
+        </MainTable>
+        <ModalWindow />
+        <CarsPagination getCurrentPage={getCurrentPage} />
       </div>
     </authContext.Provider>
   );

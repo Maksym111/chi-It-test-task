@@ -19,27 +19,34 @@ export const MainTable = styled.table`
   }
 
   td {
-    /* overflow: hidden; */
+    height: 30px;
   }
+
   td:nth-of-type(1) {
     width: 150px;
   }
+
   td:nth-of-type(2) {
     width: 175px;
   }
+
   td:nth-of-type(3) {
     width: 200px;
   }
+
   td:nth-of-type(4) {
     width: 125px;
   }
+
   td:nth-of-type(5) {
     width: 50px;
   }
+
   td:nth-of-type(6) {
     width: 125px;
     padding: 5px;
   }
+
   td:nth-of-type(7) {
     width: 100px;
     padding: 5px;

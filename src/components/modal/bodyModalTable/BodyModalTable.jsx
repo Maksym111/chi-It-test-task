@@ -5,7 +5,7 @@ import SelectColor from "../selects/SelectColor";
 import SelectAvailability from "../selects/SelectAvailability";
 import PriceInput from "../../inputsModalWindow/PriceInput";
 
-const BodyModalTable = ({ isPriceOpen }) => {
+const BodyModalTable = ({ isEditOpen }) => {
   const { currentRowCar: carEl, updateCurrentRowCar } = useContext(ctx);
 
   const {
@@ -38,7 +38,7 @@ const BodyModalTable = ({ isPriceOpen }) => {
           <PriceInput
             defaultValue={price}
             addNewValue={addNewValue}
-            isPriceOpen={isPriceOpen}
+            isEditOpen={isEditOpen}
           />
         </td>
         <td>

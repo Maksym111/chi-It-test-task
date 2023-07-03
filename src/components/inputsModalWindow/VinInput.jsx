@@ -1,9 +1,26 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import ctx from "../../context/authContext";
+
+import { Notify } from "notiflix/build/notiflix-notify-aio";
+
 import { Edits, Wrapper } from "./StylesInput.styled";
 
-const VinInput = ({ addNewValue }) => {
+const VinInput = ({ addNewValue, isEditOpen }) => {
   const [isEdit, setIsEdit] = useState(true);
   const [car_vin, setCar_vin] = useState("");
+
+  const { allCars } = useContext(ctx);
+
+  useEffect(() => {
+    if (isEdit === true) {
+      isEditOpen((prevState) => {
+        return {
+          ...prevState,
+          vin: true,
+        };
+      });
+    }
+  }, [isEdit, isEditOpen]);
 
   const handleChageValueInput = (e) => {
     let { value } = e.target;
@@ -27,10 +44,27 @@ const VinInput = ({ addNewValue }) => {
   };
 
   const confirmData = () => {
+    if (car_vin.length < 17) {
+      Notify.warning("Not the full length of the VIN!");
+      return;
+    }
+
+    const findTheSame = allCars.find((elem) => elem.car_vin === car_vin);
+
+    if (car_vin === findTheSame?.car_vin) {
+      Notify.warning("Such a VIN is already exist in the table!");
+      return;
+    }
     addNewValue({ car_vin });
 
-    setIsEdit((prevState) => !prevState);
-    // isPriceOpen(!isEdit);
+    setIsEdit(false);
+
+    isEditOpen((prevState) => {
+      return {
+        ...prevState,
+        vin: false,
+      };
+    });
   };
 
   return (

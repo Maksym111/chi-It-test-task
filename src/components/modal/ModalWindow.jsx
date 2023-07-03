@@ -1,8 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
+import { v4 as uuidv4 } from "uuid";
+
 import ctx from "../../context/authContext";
-import isEqualObject from "../../utils/jsFunc/isEqualObject";
+// import isEqualObject from "../../utils/jsFunc/isEqualObject";
+import isEqualObject from "../../utils/jsFunc";
 
 import { CancelBtn, Modal, ModalOverlay, SaveBtn } from "./ModalWindow.styled";
 import { MainTable } from "../tableCars/TableCars.styled";
@@ -12,7 +15,7 @@ import CleanBodyModalTable from "./cleanBodyModalTable/CleanBodyModalTable";
 
 const ModalWindow = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPriceInputOpen, setIsPriceInputOpen] = useState(false);
+  const [isInputEditAvailable, setIsInputEditAvailable] = useState({});
 
   const {
     allCars,
@@ -79,10 +82,9 @@ const ModalWindow = () => {
       Notify.warning("You haven't made any changes");
       return;
     }
-    if (isPriceInputOpen) {
-      Notify.warning(
-        "Enter the price value and confirm or cancel the price change"
-      );
+
+    if (isInputEditAvailable.price) {
+      Notify.warning(`Enter the price value and confirm or cancel it`);
       return;
     }
 
@@ -92,7 +94,34 @@ const ModalWindow = () => {
   };
 
   const saveNewDataCar = () => {
-    return;
+    const cars = [...allCars];
+    let isAllFine = true;
+
+    const openEdits = Object.keys(isInputEditAvailable);
+
+    openEdits.forEach((elemKey) => {
+      if (isInputEditAvailable[elemKey]) {
+        Notify.warning(`Enter the ${elemKey} value and confirm it`);
+        isAllFine = false;
+        return;
+      }
+    });
+
+    if (!isAllFine) {
+      return;
+    }
+
+    carEl["id"] = Number(
+      uuidv4()
+        .replace(/[^0-9]/g, "")
+        .slice(0, 17)
+    );
+
+    delete carEl.typeAction;
+
+    cars.unshift(carEl);
+    updateAllCars(cars);
+    closeModal();
   };
 
   return (
@@ -102,7 +131,7 @@ const ModalWindow = () => {
           <Modal>
             <MainTable>
               <HeadModalTable />
-              <BodyModalTable isPriceOpen={setIsPriceInputOpen} />
+              <BodyModalTable isEditOpen={setIsInputEditAvailable} />
             </MainTable>
 
             <SaveBtn type="button" onClick={saveUpdateDataCar}>
@@ -133,7 +162,7 @@ const ModalWindow = () => {
           <Modal>
             <MainTable>
               <HeadModalTable />
-              <CleanBodyModalTable isPriceOpen={setIsPriceInputOpen} />
+              <CleanBodyModalTable isEditOpen={setIsInputEditAvailable} />
             </MainTable>
 
             <SaveBtn type="button" onClick={saveNewDataCar}>

@@ -7,6 +7,7 @@ import { WrapSelect } from "./TableRow.styled";
 
 const TableRow = ({ carEl }) => {
   const {
+    id,
     car,
     car_model,
     car_vin,
@@ -35,9 +36,13 @@ const TableRow = ({ carEl }) => {
         <td>{price}</td>
         <td>{availability.toString()}</td>
         <td>
-          <WrapSelect>
-            <Edit user={carEl} getTypeAction={getTypeAction} />
-          </WrapSelect>
+          {id === 0 ? (
+            ""
+          ) : (
+            <WrapSelect>
+              <Edit user={carEl} getTypeAction={getTypeAction} />
+            </WrapSelect>
+          )}
         </td>
       </tr>
     </>

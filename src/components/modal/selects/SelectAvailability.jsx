@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 
-const SelectAvailability = ({ defaultValue, addNewValue }) => {
+const SelectAvailability = ({ defaultValue, addNewValue, isEditOpen }) => {
   const [selectedValue, setSelectedValue] = useState(
     defaultValue.toLowerCase()
   );
@@ -37,6 +37,17 @@ const SelectAvailability = ({ defaultValue, addNewValue }) => {
     },
   };
 
+  useEffect(() => {
+    if (defaultValue === "") {
+      isEditOpen((prevState) => {
+        return {
+          ...prevState,
+          availability: true,
+        };
+      });
+    }
+  }, [defaultValue, isEditOpen]);
+
   const getFilter = () => {
     return selectedValue
       ? optionsSelect.find((elem) => elem.value === selectedValue)
@@ -46,6 +57,15 @@ const SelectAvailability = ({ defaultValue, addNewValue }) => {
   const onChangeFilter = (newOption) => {
     setSelectedValue(newOption.value);
     addNewValue({ availability: newOption.value });
+
+    if (selectedValue === "") {
+      isEditOpen((prevState) => {
+        return {
+          ...prevState,
+          availability: false,
+        };
+      });
+    }
   };
 
   return (
