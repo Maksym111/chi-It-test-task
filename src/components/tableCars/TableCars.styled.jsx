@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import carImg from "../../assets/car-96.png";
+import carImg from "../assets/car-96.png";
 
 export const HeaderWrapper = styled.div`
   display: flex;
