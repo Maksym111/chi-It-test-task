@@ -94,6 +94,7 @@ const ModalWindow = () => {
       return;
     }
 
+    console.log("isInputEditAvailable.price", isInputEditAvailable.price);
     if (isInputEditAvailable.price) {
       Notify.warning(`Enter the price value and confirm or cancel it`);
       return;

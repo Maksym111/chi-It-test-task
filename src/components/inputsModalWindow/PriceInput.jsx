@@ -78,6 +78,11 @@ const PriceInput = ({ defaultValue, addNewValue, isEditOpen }) => {
   };
 
   const cancelChangesEdit = () => {
+    if (isEdit === true && nowAndPrevInputValue[1] === "0") {
+      Notify.warning("Enter value greater than 0 and confirm it");
+      return;
+    }
+
     setNowAndPrevInputValue([nowAndPrevInputValue[1], nowAndPrevInputValue[1]]);
 
     setIsEdit((prevState) => !prevState);
