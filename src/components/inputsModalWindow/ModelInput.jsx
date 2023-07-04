@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { Edits, Wrapper } from "./StylesInput.styled";
+import { Notify } from "notiflix";
+import { Edits, Wrapper } from "./StylesEdit.styled";
+import { ModalInput, ResultValue } from "./common/ModalInput.styled";
 
 const ModelInput = ({ addNewValue, isEditOpen }) => {
   const [isEdit, setIsEdit] = useState(true);
@@ -52,6 +54,11 @@ const ModelInput = ({ addNewValue, isEditOpen }) => {
   };
 
   const confirmData = () => {
+    if (car_model.length === 0) {
+      Notify.warning("Value cannot be empty!");
+      return;
+    }
+
     addNewValue({ car_model });
 
     setIsEdit(false);
@@ -68,7 +75,7 @@ const ModelInput = ({ addNewValue, isEditOpen }) => {
     <Wrapper>
       {isEdit ? (
         <>
-          <input
+          <ModalInput
             type="text"
             value={car_model}
             onChange={handleChageValueInput}
@@ -77,7 +84,7 @@ const ModelInput = ({ addNewValue, isEditOpen }) => {
         </>
       ) : (
         <>
-          <div>{car_model}</div>
+          <ResultValue>{car_model}</ResultValue>
           <Edits onClick={changeConfirmedData}>⚙️</Edits>
         </>
       )}

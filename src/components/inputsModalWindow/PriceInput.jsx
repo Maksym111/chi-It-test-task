@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
-import { Edits, WrapEdits, Wrapper } from "./StylesInput.styled";
+import { Edits, WrapEdits, Wrapper } from "./StylesEdit.styled";
+import { ModalInput, ResultValue } from "./common/ModalInput.styled";
 
 const PriceInput = ({ defaultValue, addNewValue, isEditOpen }) => {
   const [isEdit, setIsEdit] = useState(false);
@@ -26,6 +27,14 @@ const PriceInput = ({ defaultValue, addNewValue, isEditOpen }) => {
   const onChangeInput = (e) => {
     let { value } = e.target;
     if (value === "") {
+      value = "0";
+    }
+
+    if (value.charAt(0) === "0" && +value.charAt(1) > 0) {
+      value = value.charAt(1);
+    }
+
+    if (value.charAt(0) === "0" && value.charAt(1) === "0") {
       value = "0";
     }
 
@@ -89,7 +98,7 @@ const PriceInput = ({ defaultValue, addNewValue, isEditOpen }) => {
     <Wrapper>
       {isEdit ? (
         <>
-          <input
+          <ModalInput
             type="number"
             pattern="[0-9]*"
             min="0"
@@ -105,7 +114,7 @@ const PriceInput = ({ defaultValue, addNewValue, isEditOpen }) => {
         </>
       ) : (
         <>
-          <div>{`$${nowAndPrevInputValue[0]}`}</div>
+          <ResultValue number>{`$${nowAndPrevInputValue[0]}`}</ResultValue>
           <Edits onClick={cancelChangesEdit}>⚙️</Edits>
         </>
       )}

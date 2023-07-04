@@ -25,6 +25,8 @@ const Edit = ({ getTypeAction }) => {
       border: "none",
       borderColor: isFocused ? "#ccc" : baseStyles.borderColor,
       boxShadow: isFocused ? "none" : baseStyles.boxShadow,
+      backgroundColor: "transparent",
+      color: "black",
     }),
     menu: (styles) => {
       return {

@@ -6,11 +6,21 @@ import { v4 as uuidv4 } from "uuid";
 import ctx from "../../context/authContext";
 import isEqualObject from "../../utils/jsFunc";
 
-import { CancelBtn, Modal, ModalOverlay, SaveBtn } from "./ModalWindow.styled";
+import {
+  ActionBtnsWrapper,
+  CancelBtn,
+  DeleteNameAction,
+  DeleteTitle,
+  Modal,
+  ModalOverlay,
+  SaveBtn,
+} from "./ModalWindow.styled";
 import { MainTable } from "../tableCars/TableCars.styled";
 import HeadModalTable from "./headModalTable/HeadModalTable";
 import BodyModalTable from "./bodyModalTable/BodyModalTable";
 import CleanBodyModalTable from "./cleanBodyModalTable/CleanBodyModalTable";
+import { setDataLocStor } from "../../services/localStorage";
+import { KEY_LOCAL } from "../../utils/constants";
 
 const ModalWindow = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,6 +77,7 @@ const ModalWindow = () => {
     newAllCars.splice(indexElem, 1);
     updateAllCars(newAllCars);
 
+    setDataLocStor(KEY_LOCAL.keyAllCars, newAllCars);
     closeModal();
   };
 
@@ -90,6 +101,7 @@ const ModalWindow = () => {
 
     newCars.splice(indexElem, 1, carEl);
     updateAllCars(newCars);
+    setDataLocStor(KEY_LOCAL.keyAllCars, newCars);
     closeModal();
   };
 
@@ -122,6 +134,9 @@ const ModalWindow = () => {
     cars.unshift(carEl);
     updateAllCars(cars);
     updateFilteredCars(cars);
+
+    setDataLocStor(KEY_LOCAL.keyAllCars, cars);
+    setDataLocStor(KEY_LOCAL.keyFilteredCars, cars);
     closeModal();
   };
 
@@ -135,26 +150,31 @@ const ModalWindow = () => {
               <BodyModalTable isEditOpen={setIsInputEditAvailable} />
             </MainTable>
 
-            <SaveBtn type="button" onClick={saveUpdateDataCar}>
-              Save
-            </SaveBtn>
-            <CancelBtn type="button" onClick={closeModal}>
-              Cancel
-            </CancelBtn>
+            <ActionBtnsWrapper>
+              <SaveBtn type="button" onClick={saveUpdateDataCar}>
+                Save
+              </SaveBtn>
+              <CancelBtn type="button" onClick={closeModal}>
+                Cancel
+              </CancelBtn>
+            </ActionBtnsWrapper>
           </Modal>
         </ModalOverlay>
       )}
       {isModalOpen && typeAction === "delete" && (
         <ModalOverlay onClick={onOverlayClick}>
           <Modal>
-            <h1>Are you want to perform your action?</h1>
+            <DeleteNameAction>Delete car from table?</DeleteNameAction>
+            <DeleteTitle>Are you want to perform your action?</DeleteTitle>
 
-            <button type="button" onClick={deleteCarItem}>
-              Yes
-            </button>
-            <button type="button" onClick={closeModal}>
-              No
-            </button>
+            <ActionBtnsWrapper>
+              <SaveBtn type="button" onClick={deleteCarItem}>
+                Yes
+              </SaveBtn>
+              <CancelBtn type="button" onClick={closeModal}>
+                No
+              </CancelBtn>
+            </ActionBtnsWrapper>
           </Modal>
         </ModalOverlay>
       )}
@@ -166,12 +186,14 @@ const ModalWindow = () => {
               <CleanBodyModalTable isEditOpen={setIsInputEditAvailable} />
             </MainTable>
 
-            <SaveBtn type="button" onClick={saveNewDataCar}>
-              Save
-            </SaveBtn>
-            <CancelBtn type="button" onClick={closeModal}>
-              Cancel
-            </CancelBtn>
+            <ActionBtnsWrapper>
+              <SaveBtn type="button" onClick={saveNewDataCar}>
+                Save
+              </SaveBtn>
+              <CancelBtn type="button" onClick={closeModal}>
+                Cancel
+              </CancelBtn>
+            </ActionBtnsWrapper>
           </Modal>
         </ModalOverlay>
       )}

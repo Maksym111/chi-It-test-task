@@ -4,6 +4,7 @@ import ctx from "../../../context/authContext";
 import SelectColor from "../selects/SelectColor";
 import SelectAvailability from "../selects/SelectAvailability";
 import PriceInput from "../../inputsModalWindow/PriceInput";
+import { TableRow } from "./BodyModalTable.styled";
 
 const BodyModalTable = ({ isEditOpen }) => {
   const { currentRowCar: carEl, updateCurrentRowCar } = useContext(ctx);
@@ -26,7 +27,7 @@ const BodyModalTable = ({ isEditOpen }) => {
 
   return (
     <tbody>
-      <tr>
+      <TableRow>
         <td>{car}</td>
         <td>{car_model}</td>
         <td>{car_vin}</td>
@@ -47,7 +48,7 @@ const BodyModalTable = ({ isEditOpen }) => {
             addNewValue={addNewValue}
           />
         </td>
-      </tr>
+      </TableRow>
     </tbody>
   );
 };

@@ -6,8 +6,6 @@ export const PaginationWrapper = styled.div`
   align-items: center;
 
   gap: 10px;
-
-  margin-bottom: 30px;
 `;
 
 export const ButtonPagination = styled.button`
@@ -15,17 +13,18 @@ export const ButtonPagination = styled.button`
   align-items: center;
   justify-content: center;
 
-  width: 30px;
-  height: 30px;
+  width: 110px;
+  height: 34px;
   margin: 0;
-  padding: 0;
+  padding: 5px 10px;
 
-  background-color: #afc8ff;
-  color: black;
+  background-color: #ffffff;
+  color: #2c48fc;
   font-size: 18px;
 
-  border: 1px solid black;
-  border-radius: 4px;
+  border: 2px solid black;
+  border-radius: 2px;
+  border-color: #2c48fc;
 
   :disabled {
     opacity: 0.3;
@@ -47,22 +46,32 @@ export const ListLiPagination = styled.ul`
     width: 20px;
     height: 20px;
 
-    border: 1px solid black;
-    border-radius: 4px;
+    border: 2px solid #2c48fc;
+    border-radius: 2px;
+    color: #2c48fc;
 
+    transition: background-color 250ms ease-in-out, box-shadow 250ms ease-in-out;
     cursor: pointer;
 
     :not(:last-child) {
       margin-right: 10px;
     }
+
+    :hover {
+      box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.4);
+    }
   }
 `;
 
 export const LiBtn = styled.li`
-  background-color: #afc8ff;
+  background-color: #ffffff;
 `;
 
 export const ActiveLiBtn = styled.li`
-  background-color: #0039b4;
-  color: white;
+  && {
+    background-color: #2c48fc;
+    border-color: #2c48fc;
+    color: white;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.4);
+  }
 `;

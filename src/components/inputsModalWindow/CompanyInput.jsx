@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { Edits, Wrapper } from "./StylesInput.styled";
+import { Edits, Wrapper } from "./StylesEdit.styled";
+import { ModalInput, ResultValue } from "./common/ModalInput.styled";
+import { Notify } from "notiflix";
 
 const CompanyInput = ({ addNewValue, isEditOpen }) => {
   const [isEdit, setIsEdit] = useState(true);
@@ -28,7 +30,7 @@ const CompanyInput = ({ addNewValue, isEditOpen }) => {
       return;
     }
 
-    const result = `${value[0].toUpperCase()}${value.substring(1)}`;
+    const result = value && `${value[0].toUpperCase()}${value.substring(1)}`;
     setCar(result);
   };
 
@@ -37,6 +39,11 @@ const CompanyInput = ({ addNewValue, isEditOpen }) => {
   };
 
   const confirmData = () => {
+    if (car.length === 0) {
+      Notify.warning("Value cannot be empty!");
+      return;
+    }
+
     addNewValue({ car });
 
     setIsEdit(false);
@@ -53,12 +60,16 @@ const CompanyInput = ({ addNewValue, isEditOpen }) => {
     <Wrapper>
       {isEdit ? (
         <>
-          <input type="text" value={car} onChange={handleChageValueInput} />
+          <ModalInput
+            type="text"
+            value={car}
+            onChange={handleChageValueInput}
+          />
           <Edits onClick={confirmData}>✔️</Edits>
         </>
       ) : (
         <>
-          <div>{car}</div>
+          <ResultValue>{car}</ResultValue>
           <Edits onClick={changeConfirmedData}>⚙️</Edits>
         </>
       )}

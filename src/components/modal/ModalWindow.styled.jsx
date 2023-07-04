@@ -21,6 +21,46 @@ export const Modal = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 `;
 
-export const SaveBtn = styled.button``;
+export const ActionBtnsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
 
-export const CancelBtn = styled.button``;
+  button {
+    display: inline-block;
+    border: 1px solid #bdbdbd;
+    color: white;
+    padding: 10px 20px;
+    font-size: 21px;
+    border-radius: 4px;
+  }
+`;
+
+export const SaveBtn = styled.button`
+  background-color: #23a801;
+
+  :hover {
+    background-color: #1f9202;
+  }
+`;
+
+export const CancelBtn = styled.button`
+  background-color: #a52a2a;
+
+  :hover {
+    background-color: #812020;
+  }
+`;
+
+export const DeleteNameAction = styled.p`
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  font-style: italic;
+  color: red;
+`;
+
+export const DeleteTitle = styled.h1`
+  padding: 50px 50px 70px;
+`;

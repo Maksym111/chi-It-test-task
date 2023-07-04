@@ -9,6 +9,7 @@ import PriceInput from "../../inputsModalWindow/PriceInput";
 import SelectAvailability from "../selects/SelectAvailability";
 
 import SelectYear from "../selects/yearSelect/SelectYear";
+import { TableRow } from "./CleanBodyModalTable.styled";
 
 const CleanBodyModalTable = ({ isEditOpen }) => {
   const { updateCurrentRowCar } = useContext(ctx);
@@ -21,7 +22,7 @@ const CleanBodyModalTable = ({ isEditOpen }) => {
 
   return (
     <tbody>
-      <tr>
+      <TableRow>
         <td>
           <CompanyInput addNewValue={addNewValue} isEditOpen={isEditOpen} />
         </td>
@@ -55,7 +56,7 @@ const CleanBodyModalTable = ({ isEditOpen }) => {
             isEditOpen={isEditOpen}
           />
         </td>
-      </tr>
+      </TableRow>
     </tbody>
   );
 };

@@ -1,19 +1,32 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ctx from "../../context/authContext";
 import { Notify } from "notiflix";
+import { getDataLocStor, setDataLocStor } from "../../services/localStorage";
+import { KEY_LOCAL } from "../../utils/constants";
+import {
+  ButtonClearSearch,
+  ButtonSearch,
+  FormSearch,
+  InputSearch,
+} from "./SearchCar.styled";
 
 const SearchCar = () => {
   const [searchInputValue, setSearchInputValue] = useState("");
   const { allCars, updateFilteredCars } = useContext(ctx);
+  const valueSearchLocStor = getDataLocStor(KEY_LOCAL.keyValueSearch);
+
+  useEffect(() => {
+    if (valueSearchLocStor) {
+      setSearchInputValue(valueSearchLocStor);
+    }
+  }, []);
 
   const searchedCars = (str) => {
-    const ALL_CARS = allCars;
-
     if (str === "") return allCars;
 
     let wordsSearch = str.split(" ");
 
-    const newCarsStr = newArrFromString(wordsSearch, ALL_CARS);
+    const newCarsStr = newArrFromString(wordsSearch, allCars);
 
     if (newCarsStr.length === 0) {
       Notify.failure("No data for this request :(");
@@ -33,6 +46,8 @@ const SearchCar = () => {
     const resCars = searchedCars(searchInputValue.toLowerCase().trim());
 
     updateFilteredCars(resCars);
+    setDataLocStor(KEY_LOCAL.keyFilteredCars, resCars);
+    setDataLocStor(KEY_LOCAL.keyValueSearch, searchInputValue);
   };
 
   const filterByWord = (word, arr) => {
@@ -58,15 +73,28 @@ const SearchCar = () => {
     return newArrFromString(words, res);
   }
 
+  const onClearBtnClick = () => {
+    setSearchInputValue("");
+    setDataLocStor(KEY_LOCAL.keyValueSearch, "");
+    setDataLocStor(KEY_LOCAL.keyFilteredCars, allCars);
+    updateFilteredCars(allCars);
+  };
+
   return (
-    <form onSubmit={handleSubmitForm}>
-      <input
+    <FormSearch onSubmit={handleSubmitForm}>
+      <InputSearch
         type="text"
         onChange={handleChangeInputValue}
         value={searchInputValue}
+        placeholder="Search..."
       />
-      <button type="submit">🔍</button>
-    </form>
+      <ButtonSearch type="submit">🔍</ButtonSearch>
+      {valueSearchLocStor && (
+        <ButtonClearSearch type="button" onClick={onClearBtnClick}>
+          ❌
+        </ButtonClearSearch>
+      )}
+    </FormSearch>
   );
 };
 

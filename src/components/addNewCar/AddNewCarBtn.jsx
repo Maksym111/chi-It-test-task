@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import ctx from "../../context/authContext";
+import { ButtonClearSearch } from "./AddNewCarBtn.tyled";
 
 const AddNewCarBtn = () => {
   const { updateCurrentRowCar } = useContext(ctx);
@@ -9,9 +10,9 @@ const AddNewCarBtn = () => {
   };
 
   return (
-    <button type="button" onClick={handleAddCar}>
+    <ButtonClearSearch type="button" onClick={handleAddCar}>
       Add new car
-    </button>
+    </ButtonClearSearch>
   );
 };
 

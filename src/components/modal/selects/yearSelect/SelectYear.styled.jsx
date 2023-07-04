@@ -71,6 +71,6 @@ export const ContainerYearPicker = styled.div`
 `;
 
 export const WrapperYearPicker = styled.div`
-  margin-top: -2px;
-  margin-bottom: -2px;
+  margin-top: 1px;
+  margin-bottom: 1px;
 `;

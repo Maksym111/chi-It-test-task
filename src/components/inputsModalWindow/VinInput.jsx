@@ -3,7 +3,8 @@ import ctx from "../../context/authContext";
 
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 
-import { Edits, Wrapper } from "./StylesInput.styled";
+import { Edits, Wrapper } from "./StylesEdit.styled";
+import { ModalInput, ResultValue } from "./common/ModalInput.styled";
 
 const VinInput = ({ addNewValue, isEditOpen }) => {
   const [isEdit, setIsEdit] = useState(true);
@@ -71,12 +72,16 @@ const VinInput = ({ addNewValue, isEditOpen }) => {
     <Wrapper>
       {isEdit ? (
         <>
-          <input type="text" value={car_vin} onChange={handleChageValueInput} />
+          <ModalInput
+            type="text"
+            value={car_vin}
+            onChange={handleChageValueInput}
+          />
           <Edits onClick={confirmData}>✔️</Edits>
         </>
       ) : (
         <>
-          <div>{car_vin}</div>
+          <ResultValue>{car_vin}</ResultValue>
           <Edits onClick={changeConfirmedData}>⚙️</Edits>
         </>
       )}

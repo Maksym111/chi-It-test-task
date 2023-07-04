@@ -135,10 +135,12 @@ const CarsPagination = ({ getCurrentPage }) => {
 
   const handleArrowClick = (e) => {
     const arrowBtn = e.target;
-    if (arrowBtn.textContent === ">") {
+    if (arrowBtn.textContent === "Next >") {
       setActivBtnNumber((prevState) => (prevState = +prevState + 1));
-    } else {
+      getCurrentPage(activеBtnNumber + 1);
+    } else if (arrowBtn.textContent === "< Previous") {
       setActivBtnNumber((prevState) => (prevState = +prevState - 1));
+      getCurrentPage(activеBtnNumber - 1);
     }
   };
 
@@ -151,7 +153,7 @@ const CarsPagination = ({ getCurrentPage }) => {
             ref={arrowBack}
             onClick={handleArrowClick}
           >
-            {"<"}
+            {"< Previous"}
           </ButtonPagination>
           <ListLiPagination onClick={handleListElementClick}>
             {currentNumbsBtn.length > 0 &&
@@ -168,7 +170,7 @@ const CarsPagination = ({ getCurrentPage }) => {
             ref={arrowNext}
             onClick={handleArrowClick}
           >
-            {">"}
+            {"Next >"}
           </ButtonPagination>
         </PaginationWrapper>
       )}
