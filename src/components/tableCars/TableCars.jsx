@@ -6,15 +6,23 @@ import { getAllCars } from "../../services/axios";
 import TableHead from "../tableHead/TableHead";
 import TableBody from "../tableBody/TableBody";
 import AddNewCarBtn from "../addNewCar/AddNewCarBtn";
-import ModalWindow from "../modal/ModalWindow";
+import ModalWindow from "../modal/modalWindow/ModalWindow";
+
 import CarsPagination from "../carsPagination/CarsPagination";
 import SearchCar from "../search/SearchCar";
 
-import { HeaderWrapper, MainTable } from "./TableCars.styled";
+import {
+  HeaderWrapper,
+  LoaderCar,
+  Loading,
+  MainTable,
+  WrapperLoaderCar,
+} from "./TableCars.styled";
 import { getDataLocStor, setDataLocStor } from "../../services/localStorage";
 import { KEY_LOCAL } from "../../utils/constants";
 
 const TableCars = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [allCars, setAllCars] = useState([]);
   const [filteredCars, setFilteredCars] = useState([]);
 
@@ -28,7 +36,7 @@ const TableCars = () => {
     const localAllCars = getDataLocStor(KEY_LOCAL.keyAllCars);
     const localFilteredCars = getDataLocStor(KEY_LOCAL.keyFilteredCars);
 
-    if (localFilteredCars) {
+    if (localFilteredCars && localAllCars) {
       setFilteredCars(localFilteredCars);
       setAllCars(localAllCars);
     } else if (localAllCars) {
@@ -78,6 +86,12 @@ const TableCars = () => {
     setCarsPerPage(newCarsPerPage);
   }, [filteredCars, range]);
 
+  useEffect(() => {
+    if (allCars.length && carsPerPage.length > 0) {
+      setIsLoading(false);
+    }
+  }, [allCars.length, carsPerPage.length]);
+
   const getCurrentPage = useCallback((number) => {
     let firstRange = number * 50 - 50;
     let secondRange = number * 50;
@@ -119,10 +133,20 @@ const TableCars = () => {
           <SearchCar />
           <AddNewCarBtn />
         </HeaderWrapper>
-        <MainTable>
-          <TableHead />
-          {carsPerPage.length > 0 ? <TableBody /> : <TableBody empty />}
-        </MainTable>
+
+        {isLoading ? (
+          <>
+            <Loading>Loading our cars... 😊</Loading>
+            <WrapperLoaderCar>
+              <LoaderCar></LoaderCar>
+            </WrapperLoaderCar>
+          </>
+        ) : (
+          <MainTable>
+            <TableHead />
+            <>{carsPerPage.length > 0 ? <TableBody /> : <TableBody empty />}</>
+          </MainTable>
+        )}
         <ModalWindow />
         <CarsPagination getCurrentPage={getCurrentPage} />
       </>

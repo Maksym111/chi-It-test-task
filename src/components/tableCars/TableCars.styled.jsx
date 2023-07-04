@@ -7,6 +7,43 @@ export const HeaderWrapper = styled.div`
   margin-bottom: 30px;
 `;
 
+export const Loading = styled.p`
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  text-transform: uppercase;
+`;
+
+export const WrapperLoaderCar = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 -40px;
+  height: 100px;
+  overflow: hidden;
+`;
+
+export const LoaderCar = styled.div`
+  width: 80px;
+  height: 100%;
+  border-radius: 15px;
+  position: relative;
+  animation: moveCar 5s infinite linear;
+  background-image: url("/car-96.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  @keyframes moveCar {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 60%;
+    }
+  }
+`;
+
 export const MainTable = styled.table`
   table-layout: fixed;
   width: auto;

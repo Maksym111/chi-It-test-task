@@ -107,7 +107,7 @@ const CarsPagination = ({ getCurrentPage }) => {
       return;
     }
 
-    //-------логіка натискання на три крапк, в else на будь-який номер кнопки
+    // Логіка натискання на три крапк, в else на будь-який номер кнопки
 
     if (textContent === RIGHT_DOTS) {
       let newNumber = 0;
@@ -128,9 +128,6 @@ const CarsPagination = ({ getCurrentPage }) => {
       setActivBtnNumber(+textContent);
       getCurrentPage(+textContent);
     }
-
-    //Очищення масиву пагінації при кліку на іншу кнопку пагінації
-    // setCurrentNumbBtn([]);
   };
 
   const handleArrowClick = (e) => {

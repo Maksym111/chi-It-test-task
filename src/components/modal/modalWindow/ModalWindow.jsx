@@ -3,8 +3,8 @@ import { Notify } from "notiflix/build/notiflix-notify-aio";
 
 import { v4 as uuidv4 } from "uuid";
 
-import ctx from "../../context/authContext";
-import isEqualObject from "../../utils/jsFunc";
+import ctx from "../../../context/authContext";
+import isEqualObject from "../../../utils/jsFunc";
 
 import {
   ActionBtnsWrapper,
@@ -15,12 +15,12 @@ import {
   ModalOverlay,
   SaveBtn,
 } from "./ModalWindow.styled";
-import { MainTable } from "../tableCars/TableCars.styled";
-import HeadModalTable from "./headModalTable/HeadModalTable";
-import BodyModalTable from "./bodyModalTable/BodyModalTable";
-import CleanBodyModalTable from "./cleanBodyModalTable/CleanBodyModalTable";
-import { setDataLocStor } from "../../services/localStorage";
-import { KEY_LOCAL } from "../../utils/constants";
+import { MainTable } from "../../tableCars/TableCars.styled";
+import HeadModalTable from "../headModalTable/HeadModalTable";
+import BodyModalTable from "../bodyModalTable/BodyModalTable";
+import CleanBodyModalTable from "../cleanBodyModalTable/CleanBodyModalTable";
+import { setDataLocStor } from "../../../services/localStorage";
+import { KEY_LOCAL } from "../../../utils/constants";
 
 const ModalWindow = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
