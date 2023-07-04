@@ -62,6 +62,10 @@ const PriceInput = ({ defaultValue, addNewValue, isEditOpen }) => {
     }
     if (nowAndPrevInputValue[0] !== nowAndPrevInputValue[1]) {
       addNewValue({ price: `$${nowAndPrevInputValue[0]}` });
+      setNowAndPrevInputValue([
+        nowAndPrevInputValue[0],
+        nowAndPrevInputValue[0],
+      ]);
     }
     setIsEdit(false);
 
@@ -74,7 +78,8 @@ const PriceInput = ({ defaultValue, addNewValue, isEditOpen }) => {
   };
 
   const cancelChangesEdit = () => {
-    setNowAndPrevInputValue((prevState) => [prevState[1], prevState[1]]);
+    setNowAndPrevInputValue([nowAndPrevInputValue[1], nowAndPrevInputValue[1]]);
+
     setIsEdit((prevState) => !prevState);
 
     if (isEdit) {

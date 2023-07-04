@@ -19,7 +19,7 @@ const SearchCar = () => {
     if (valueSearchLocStor) {
       setSearchInputValue(valueSearchLocStor);
     }
-  }, []);
+  }, [valueSearchLocStor]);
 
   const searchedCars = (str) => {
     if (str === "") return allCars;

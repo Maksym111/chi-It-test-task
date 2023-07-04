@@ -36,7 +36,6 @@ const TableCars = () => {
       setAllCars(localAllCars);
       setCarsPerPage(localAllCars.slice(0, 50));
     } else {
-      console.log("axios getCar");
       getCar();
     }
 
