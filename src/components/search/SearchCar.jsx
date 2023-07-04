@@ -55,7 +55,7 @@ const SearchCar = () => {
       const carElem = { ...elem };
 
       delete carElem.id;
-      const valuesString = Object.values(carElem).join("").toLowerCase();
+      const valuesString = Object.values(carElem).join(" ").toLowerCase();
 
       return valuesString.includes(word);
     });

@@ -36,10 +36,19 @@ export const LoaderCar = styled.div`
 
   @keyframes moveCar {
     0% {
-      left: -100%;
+      left: 0%;
     }
-    100% {
+
+    33% {
       left: 60%;
+    }
+
+    66% {
+      right: 60%;
+    }
+
+    100% {
+      right: 0%;
     }
   }
 `;

@@ -9,9 +9,12 @@ import {
   PaginationWrapper,
   ButtonPagination,
 } from "./CarsPagination.styled";
+import { getDataLocStor } from "../../services/localStorage";
+import { KEY_LOCAL } from "../../utils/constants";
 
 const CarsPagination = ({ getCurrentPage }) => {
   const { filteredCars: cars } = useContext(ctx);
+  const serachValue = getDataLocStor(KEY_LOCAL.keyValueSearch);
 
   const [allNumbersBtn, setAllNumbersBtn] = useState([]);
   const [currentNumbsBtn, setCurrentNumbsBtn] = useState([]);
@@ -44,6 +47,14 @@ const CarsPagination = ({ getCurrentPage }) => {
 
     firstCreatePaginationNumbers();
   }, [cars.length]);
+
+  // Якщо користувач не на першій сторінці і ввів пошук, його перекине на 1 сторінку пошуку
+  useEffect(() => {
+    if (serachValue) {
+      setActivBtnNumber(1);
+      getCurrentPage(1);
+    }
+  }, [getCurrentPage, serachValue]);
 
   useEffect(() => {
     // Логіка виведення кнопок пагінацїї
