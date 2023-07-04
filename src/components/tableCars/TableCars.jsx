@@ -134,21 +134,25 @@ const TableCars = () => {
           <AddNewCarBtn />
         </HeaderWrapper>
 
-        {isLoading ? (
+        {!isLoading ? (
           <>
-            <Loading>Loading our cars... 😊</Loading>
+            <Loading>Please wait, we are loading data... 😊</Loading>
             <WrapperLoaderCar>
               <LoaderCar></LoaderCar>
             </WrapperLoaderCar>
           </>
         ) : (
-          <MainTable>
-            <TableHead />
-            <>{carsPerPage.length > 0 ? <TableBody /> : <TableBody empty />}</>
-          </MainTable>
+          <>
+            <MainTable>
+              <TableHead />
+              <>
+                {carsPerPage.length > 0 ? <TableBody /> : <TableBody empty />}
+              </>
+            </MainTable>
+            <ModalWindow />
+            <CarsPagination getCurrentPage={getCurrentPage} />
+          </>
         )}
-        <ModalWindow />
-        <CarsPagination getCurrentPage={getCurrentPage} />
       </>
     </authContext.Provider>
   );
