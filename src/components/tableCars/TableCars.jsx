@@ -134,7 +134,7 @@ const TableCars = () => {
           <AddNewCarBtn />
         </HeaderWrapper>
 
-        {!isLoading ? (
+        {isLoading ? (
           <>
             <Loading>Please wait, we are loading data... 😊</Loading>
             <WrapperLoaderCar>
