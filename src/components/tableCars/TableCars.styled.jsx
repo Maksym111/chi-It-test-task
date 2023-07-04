@@ -29,7 +29,7 @@ export const LoaderCar = styled.div`
   border-radius: 15px;
   position: relative;
   animation: moveCar 5s infinite linear;
-  background-image: url("/car-96.png");
+  background-image: url("../../../public/car-96.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
