@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import carImg from "../../assets/car-96.png";
 
 export const HeaderWrapper = styled.div`
   display: flex;
@@ -26,10 +27,9 @@ export const WrapperLoaderCar = styled.div`
 export const LoaderCar = styled.div`
   width: 80px;
   height: 100%;
-  border-radius: 15px;
   position: relative;
   animation: moveCar 5s infinite linear;
-  background-image: url("../../../public/car-96.png");
+  background-image: url(${carImg});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
